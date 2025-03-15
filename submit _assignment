@@ -1,0 +1,29 @@
+<?php
+include 'db.php';
+session_start();
+
+if ($_SESSION['role'] !== 'student') {
+    echo json_encode(["success" => false, "message" => "Unauthorized"]);
+    exit;
+}
+
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_FILES['file'])) {
+    $assignment_id = $_POST['assignment_id'];
+    $student_id = $_SESSION['user_id'];
+    $target_dir = "uploads/";
+    $target_file = $target_dir . basename($_FILES["file"]["name"]);
+
+    if (move_uploaded_file($_FILES["file"]["tmp_name"], $target_file)) {
+        $sql = "INSERT INTO submissions (assignment_id, student_id, file_path) 
+                VALUES ('$assignment_id', '$student_id', '$target_file')";
+        
+        if ($conn->query($sql) === TRUE) {
+            echo json_encode(["success" => true, "message" => "Assignment submitted"]);
+        } else {
+            echo json_encode(["success" => false, "message" => "Database error"]);
+        }
+    } else {
+        echo json_encode(["success" => false, "message" => "File upload failed"]);
+    }
+}
+?>
