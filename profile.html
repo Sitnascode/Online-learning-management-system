@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Your Profile - LMS</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <h1>Your Profile</h1>
+      </div>
+    </header>
+
+    <section class="profile">
+      <div class="container">
+        <form action="update_profile.php" method="POST">
+          <label for="username">Username</label>
+          <input
+            type="text"
+            id="username"
+            name="username"
+            value="your name"
+            required
+          />
+
+          <label for="email">Email</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            value="lms@example.com"
+            required
+          />
+
+          <label for="bio">Bio</label>
+          <textarea id="bio" name="bio" rows="4">Web Developer</textarea>
+          <button type="submit">Update Profile</button>
+        </form>
+      </div>
+    </section>
+  </body>
+</html>
