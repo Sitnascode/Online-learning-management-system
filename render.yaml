@@ -1,0 +1,28 @@
+services:
+  - type: web
+    name: eduflow-lms-backend
+    env: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: MONGODB_URI
+        value: mongodb+srv://sitiranasir_db_user:sitgobu123@cluster0.eqsofth.mongodb.net/eduflow_lms?retryWrites=true&w=majority&appName=Cluster0
+      - key: JWT_SECRET
+        value: 8929b1ccde2b2b91caab92e9df628d6e40aec12850a6fccb06897fd4dc053f737cd61755900e01c2544498b6ccb5c75d3096c000c3ebdc5bbe290dcb2668201d
+      - key: JWT_EXPIRES_IN
+        value: 7d
+      - key: EMAIL_HOST
+        value: smtp.gmail.com
+      - key: EMAIL_PORT
+        value: 587
+      - key: EMAIL_USER
+        value: sitiranasir@gmail.com
+      - key: EMAIL_PASS
+        value: your_app_password
+      - key: CLIENT_URL
+        value: https://your-app-name.vercel.app
