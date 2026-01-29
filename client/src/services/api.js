@@ -1,6 +1,7 @@
 import axios from "axios";
 
-const API_BASE_URL = "/api"; // Same domain deployment
+const API_BASE_URL =
+  "https://online-learning-management-system-he6h.onrender.com/api";
 
 // Create axios instance
 const api = axios.create({
