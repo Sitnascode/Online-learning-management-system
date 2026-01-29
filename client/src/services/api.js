@@ -1,6 +1,8 @@
 import axios from "axios";
 
+// API URL - configurable for different deployments
 const API_BASE_URL =
+  import.meta.env.VITE_API_URL ||
   "https://online-learning-management-system-he6h.onrender.com/api";
 
 // Create axios instance
