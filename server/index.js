@@ -29,6 +29,7 @@ app.use(helmet());
 
 // CORS configuration for separate deployments
 const allowedOrigins = [
+  "https://eduflowlms-psi.vercel.app", // Your actual Vercel URL
   process.env.CLIENT_URL,
   "http://localhost:3000",
   "http://localhost:3001",
