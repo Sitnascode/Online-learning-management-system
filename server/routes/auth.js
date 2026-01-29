@@ -13,6 +13,23 @@ const generateToken = (userId) => {
   });
 };
 
+// @route   GET /api/auth/test
+// @desc    Test auth routes
+// @access  Public
+router.get("/test", (req, res) => {
+  res.json({
+    success: true,
+    message: "Auth routes are working!",
+    timestamp: new Date().toISOString(),
+    endpoints: {
+      register: "POST /api/auth/register",
+      login: "POST /api/auth/login",
+      adminLogin: "POST /api/auth/admin-login",
+      profile: "GET /api/auth/profile (requires auth)",
+    },
+  });
+});
+
 // @route   POST /api/auth/register
 // @desc    Register a new student (STUDENTS ONLY)
 // @access  Public
