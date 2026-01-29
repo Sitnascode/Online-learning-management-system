@@ -26,13 +26,33 @@ connectDB();
 
 // Security middleware
 app.use(helmet());
+
+// CORS configuration for separate deployments
+const allowedOrigins = [
+  process.env.CLIENT_URL,
+  "http://localhost:3000",
+  "http://localhost:3001",
+  "https://localhost:3000",
+  "https://localhost:3001",
+].filter(Boolean); // Remove undefined values
+
 app.use(
   cors({
-    origin: [
-      process.env.CLIENT_URL || "http://localhost:3000",
-      "http://localhost:3001", // Add support for port 3001
-    ],
+    origin: function (origin, callback) {
+      // Allow requests with no origin (like mobile apps or curl requests)
+      if (!origin) return callback(null, true);
+
+      if (allowedOrigins.indexOf(origin) !== -1) {
+        callback(null, true);
+      } else {
+        console.log(`CORS blocked origin: ${origin}`);
+        console.log(`Allowed origins: ${allowedOrigins.join(", ")}`);
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
     credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
   }),
 );
 
@@ -92,15 +112,6 @@ app.use("/api/users", userRoutes);
 app.use("/api/notifications", notificationRoutes);
 app.use("/api/analytics", analyticsRoutes);
 
-// Serve static files in production
-if (process.env.NODE_ENV === "production") {
-  app.use(express.static("client/dist"));
-
-  app.get("*", (req, res) => {
-    res.sendFile(path.resolve("client", "dist", "index.html"));
-  });
-}
-
 // Error handling middleware
 app.use(notFound);
 app.use(errorHandler);
@@ -112,4 +123,3 @@ app.listen(PORT, () => {
     `🌐 Client URL: ${process.env.CLIENT_URL || "http://localhost:3000"}`,
   );
 });
-
