@@ -27,13 +27,18 @@ connectDB();
 // Security middleware
 app.use(helmet());
 
-// Simple CORS configuration
+// CORS configuration
 app.use(
   cors({
     origin: process.env.CLIENT_URL,
     credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
   }),
 );
+
+// Handle preflight requests
+app.options("*", cors());
 
 // Rate limiting
 const limiter = rateLimit({
